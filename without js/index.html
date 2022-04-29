@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing - Animation</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #343f4f;
+    }
+
+    .wrapper {
+        display: inline-flex;
+    }
+
+    .wrapper .text {
+        font-size: 60px;
+        color: #fff;
+        font-weight: 400;
+    }
+
+    .wrapper .effect-text {
+        margin-left: 15px;
+        height: 70px;
+        overflow: hidden;
+    }
+
+    .effect-text li {
+        list-style: none;
+        font-size: 60px;
+        font-weight: 400;
+        color: #fc4cdc;
+        position: relative;
+        top: 0;
+        animation: slide 8s steps(2) infinite;
+    }
+
+    @keyframes slide {
+        100% {
+            top: -134px;
+        }
+    }
+
+    .effect-text li span {
+        position: relative;
+    }
+
+    .effect-text li span::after {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        border-left: 2px solid #fc4cdc;
+        animation: typing 1.5s steps(10) infinite;
+        background-color: #343f4f;
+    }
+
+    @keyframes typing {
+        100% {
+            left: 100%;
+            margin: 0 -35px 0 35px;
+        }
+
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="text">I'm a Web </div>
+        <div class="effect-text">
+            <li><span>Developer</span></li>
+            <li><span>Designer</span></li>
+        </div>
+    </div>
+
+</body>
+
+</html>
