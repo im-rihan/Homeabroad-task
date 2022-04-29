@@ -1,10 +1,11 @@
-import { Search } from "@material-ui/icons";
+import { Close, Search } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import "./SearchBar.css";
 
 function SearchBar() {
   const [input, setInput] = useState("");
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,12 +14,30 @@ function SearchBar() {
       )
         .then((res) => res.json())
         .then((result) => setData(result))
-        .then((err) => console.log(err.message));
+        .catch((err) => console.log(err.message));
     };
     fetchData();
   }, []);
 
-  const handleFilter = () => {};
+  const handleFilter = (e) => {
+    const searchWord = e.target.value;
+    setInput(searchWord);
+    const newFilter = data.filter((value) => {
+      return value.city.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    if (searchWord.length >= 4) {
+      setFilteredData(newFilter);
+    } else {
+      setFilteredData([]);
+    }
+  };
+
+  const clearInput = () => {
+    setFilteredData([]);
+    setInput("");
+  };
+
   return (
     <div className="search">
       <div className="searchInputs">
@@ -29,19 +48,25 @@ function SearchBar() {
           onChange={handleFilter}
         />
         <div className="searchIcon">
-          <Search />
+          {filteredData.length === 0 ? (
+            <Search />
+          ) : (
+            <Close id="clearBtn" onClick={clearInput} />
+          )}
         </div>
       </div>
 
-      <div className="dataResult">
-        {/* {data.map((value) => {
-          return (
-            <div className="dataItem" key={value.rank}>
-              <p>{value.city}</p>
-            </div>
-          );
-        })} */}
-      </div>
+      {filteredData.length !== 0 && (
+        <div className="dataResult">
+          {filteredData.map((value) => {
+            return (
+              <div className="dataItem" key={value.rank}>
+                <p>{value.city}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
